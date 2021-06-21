@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 import numpy as np
 import joblib
+
 app = Flask(__name__)
+
 @app.route('/', methods=['POST'])
+
 def api():
     a=request.get_json()
     
@@ -14,7 +17,20 @@ def api():
     hyderabad = joblib.load("hyderabad.pkl")
     
     city=a['City']
-    a=a['Prediction']
+    area=a['area']
+    latitude=a['latitude']
+    longitude=a['longitude']
+    bedroom=a['bedroom']
+    bathroom=a["bathroom"]
+    balcony=a['balcony']
+    resaleornew=a['resaleornew']
+    parking=a['parking']
+    furnished_status=a['furnished_status']
+    lift=a['lift']
+    landmark=a['landmark']
+    flatorIndividual=a['flatorIndividual']
+    
+    a=[area,latitude,longitude,bedroom,bathroom,balcony,resaleornew,parking,furnished_status,lift,landmark,flatorIndividual]
     a=np.array(a)
     a=np.expand_dims(a,0)
     
