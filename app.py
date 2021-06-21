@@ -6,20 +6,32 @@ app = Flask(__name__)
 def api():
     a=request.get_json()
     
-    #delhi = joblib.load("delhi.pb")
-    #mumbai = joblib.load("mumbai.pb")
-    #bangalore = joblib.load("bangalore.pb")
-    #chennai = joblib.load("chennai.pb")
-    #kolkata = joblib.load("kolkata.pb")
-    #hyderabad = joblib.load("hyderabad.pb")
+    delhi = joblib.load("delhi.pkl")
+    mumbai = joblib.load("mumbai.pkl")
+    bangalore = joblib.load("bangalore.pkl")
+    chennai = joblib.load("chennai.pkl")
+    kolkata = joblib.load("kolkata.pkl")
+    hyderabad = joblib.load("hyderabad.pkl")
     
     city=a['City']
     a=a['Prediction']
     a=np.array(a)
     a=np.expand_dims(a,0)
     
+    if city=="Delhi":
+        prediction = np.array2string(delhi.predict(a)*1000000)
+    elif city=="Mumbai":
+        prediction = np.array2string(mumbai.predict(a)*1000000)    
+    elif city=="Bangalore":
+        prediction = np.array2string(bangalore.predict(a)*1000000) 
+    elif city=="Chennai":
+        prediction = np.array2string(chennai.predict(a)*1000000) 
+    elif city=="Kolkata":
+        prediction = np.array2string(kolkata.predict(a)*1000000)
+    else:
+        prediction = np.array2string(hyderabad.predict(a)*1000000)      
     
-    #result={"price":prediction}
+    result={"price":prediction}
     
     return "hello world"
     
