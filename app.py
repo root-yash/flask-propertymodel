@@ -33,7 +33,7 @@ def api():
         prediction = np.array2string(hyderabad.predict(a)*1000000)      
     
     result={"price":prediction}
-    
+    print("hi")
     return jsonify(result)
     
 
