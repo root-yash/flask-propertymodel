@@ -33,7 +33,7 @@ def api():
     
     result={"price":prediction}
     
-    return "hello world"
+    return jsonify(result)
     
 
 if __name__ == '__main__':
