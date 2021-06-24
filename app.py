@@ -7,15 +7,17 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 
 def api():
+    #Receive input from the user
     a=request.get_json()
-    
+    #loading sklearn pretrained model
     delhi = joblib.load("delhi.pkl")
     mumbai = joblib.load("mumbai.pkl")
     bangalore = joblib.load("bangalore.pkl")
     chennai = joblib.load("chennai.pkl")
     kolkata = joblib.load("kolkata.pkl")
     hyderabad = joblib.load("hyderabad.pkl")
-    
+    #variable for storing user input
+    auth=a['Auth']
     city=a['City']
     area=a['area']
     latitude=a['latitude']
@@ -29,26 +31,29 @@ def api():
     lift=a['lift']
     landmark=a['landmark']
     flatorIndividual=a['flatorIndividual']
-    
-    a=[area,latitude,longitude,bedroom,bathroom,balcony,resaleornew,parking,furnished_status,lift,landmark,flatorIndividual]
-    a=np.array(a)
-    a=np.expand_dims(a,0)
-    
-    if city=="Delhi":
-        prediction = np.array2string(delhi.predict(a)*1000000)
-    elif city=="Mumbai":
-        prediction = np.array2string(mumbai.predict(a)*1000000)    
-    elif city=="Bangalore":
-        prediction = np.array2string(bangalore.predict(a)*1000000) 
-    elif city=="Chennai":
-        prediction = np.array2string(chennai.predict(a)*1000000) 
-    elif city=="Kolkata":
-        prediction = np.array2string(kolkata.predict(a)*1000000)
+    #check if auth key entered by user is correct
+    if auth=="hX17C2wDTp":
+        a=[area,latitude,longitude,bedroom,bathroom,balcony,resaleornew,parking,furnished_status,lift,landmark,flatorIndividual]
+        a=np.array(a)
+        a=np.expand_dims(a,0)
+        
+        if city=="Delhi":
+            prediction = np.array2string(delhi.predict(a)*1000000)
+        elif city=="Mumbai":
+            prediction = np.array2string(mumbai.predict(a)*1000000)    
+        elif city=="Bangalore":
+            prediction = np.array2string(bangalore.predict(a)*1000000) 
+        elif city=="Chennai":
+            prediction = np.array2string(chennai.predict(a)*1000000) 
+        elif city=="Kolkata":
+            prediction = np.array2string(kolkata.predict(a)*1000000)
+        else:
+            prediction = np.array2string(hyderabad.predict(a)*1000000)      
+        
+        result={"price":prediction}
     else:
-        prediction = np.array2string(hyderabad.predict(a)*1000000)      
-    
-    result={"price":prediction}
-    
+        result={"price":"Wrong Auth Key"}    
+    #return price in json format    
     return jsonify(result)
     
 
