@@ -9,7 +9,7 @@ app = Flask(__name__)
 def api():
     #Receive input from the user
     a=request.get_json()
-    #loading sklearn pretrained model
+    #loading sklearn pretrained models
     delhi = joblib.load("delhi.pkl")
     mumbai = joblib.load("mumbai.pkl")
     bangalore = joblib.load("bangalore.pkl")
